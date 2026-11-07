@@ -489,9 +489,15 @@ def solve_lp(feed: pd.DataFrame, req: dict, allow_local=True, price_override=Non
 # SIDEBAR - PARAMETER
 # ----------------------------------------------------------------------------
 # HEADER NUTRIFEED DENGAN FOTO AYAM
-with open("gambar/header_ayam.jpg", "rb") as img:
-    img_base64 = base64.b64encode(img.read()).decode("utf-8")
- 
+from pathlib import Path
+import base64
+
+BASE_DIR = Path(__file__).resolve().parent
+
+gambar_path = BASE_DIR / "gambar" / "header_ayam.jpg"
+
+with open(gambar_path, "rb") as img:
+    img_base64 = base64.b64encode(img.read()).decode()
 # [PERBAIKAN] Lapisan gelap hitam diganti lapisan hijau; teks diberi !important
 # agar tidak tertimpa aturan warna judul (sebelumnya tulisan NUTRIFEED jadi hijau & tak terbaca)
 st.markdown(
