@@ -492,12 +492,23 @@ def solve_lp(feed: pd.DataFrame, req: dict, allow_local=True, price_override=Non
 from pathlib import Path
 import base64
 
+# Menentukan lokasi utama program
 BASE_DIR = Path(__file__).resolve().parent
 
-gambar_path = BASE_DIR / "gambar" / "header_ayam.jpg"
+# Mencari gambar di folder utama terlebih dahulu
+gambar_path = BASE_DIR / "header_ayam.jpg"
 
-with open(gambar_path, "rb") as img:
-    img_base64 = base64.b64encode(img.read()).decode()
+# Jika tidak ditemukan, cari di folder gambar
+if not gambar_path.exists():
+    gambar_path = BASE_DIR / "gambar" / "header_ayam.jpg"
+
+# Membaca gambar jika tersedia
+if gambar_path.exists():
+    with open(gambar_path, "rb") as img:
+        img_base64 = base64.b64encode(img.read()).decode()
+else:
+    img_base64 = ""
+    st.warning("Gambar header_ayam.jpg tidak ditemukan.")
 # [PERBAIKAN] Lapisan gelap hitam diganti lapisan hijau; teks diberi !important
 # agar tidak tertimpa aturan warna judul (sebelumnya tulisan NUTRIFEED jadi hijau & tak terbaca)
 st.markdown(
